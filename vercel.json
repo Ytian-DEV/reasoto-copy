@@ -10,5 +10,7 @@
       "src": "/api/(.*)",
       "dest": "backend/src/server.ts"
     }
-  ]
+  ],
+  "installCommand": "cd backend && npm install",
+  "buildCommand": "cd backend && npm run build"
 }
