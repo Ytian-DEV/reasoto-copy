@@ -23,8 +23,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Health check
-app.get('/health', (_req, res) => {
-  res.json({ status: 'OK', message: 'RESEATO API is running' });
+app.get('/', (_req, res) => {
+  res.json({ 
+    name: 'RESEATO API',
+    version: '1.0.0',
+    status: 'running',
+    documentation: 'Use /api/* endpoints',
+    endpoints: {
+      health: '/health',
+      auth: '/api/auth/*',
+      restaurants: '/api/restaurants/*',
+      reservations: '/api/reservations/*',
+      admin: '/api/admin/*',
+      payments: '/api/payments/*',
+      notifications: '/api/notifications/*'
+    }
+  });
 });
 
 // API Routes

@@ -4,7 +4,7 @@ import { asyncHandler } from '../middleware/errorHandler';
 import pool from '../config/database';
 
 class AdminController {
-  getDashboardStats = asyncHandler(async (req: AuthRequest, res: Response) => {
+  getDashboardStats = asyncHandler(async (_req: AuthRequest, res: Response) => {
     // Parallel queries for performance
     const [usersRes, restaurantsRes, reservationsRes, revenueRes] = await Promise.all([
       pool.query('SELECT COUNT(*) FROM users'),
@@ -24,6 +24,8 @@ class AdminController {
       success: true,
       data: stats
     });
+    
+    return; // Add return to satisfy noImplicitReturns
   });
 
   getAllReservations = asyncHandler(async (req: AuthRequest, res: Response) => {
@@ -70,9 +72,11 @@ class AdminController {
       success: true,
       data: result.rows
     });
+    
+    return;
   });
 
-  getAllRestaurants = asyncHandler(async (req: AuthRequest, res: Response) => {
+  getAllRestaurants = asyncHandler(async (_req: AuthRequest, res: Response) => {
     // Get restaurants with completed reservations count and total payouts
     const query = `
       WITH restaurant_stats AS (
@@ -125,9 +129,11 @@ class AdminController {
       success: true,
       data: restaurants
     });
+    
+    return;
   });
 
-  getAllUsers = asyncHandler(async (req: AuthRequest, res: Response) => {
+  getAllUsers = asyncHandler(async (_req: AuthRequest, res: Response) => {
     const query = `
       SELECT 
         u.id,
@@ -160,6 +166,8 @@ class AdminController {
       success: true,
       data: users
     });
+    
+    return;
   });
 
   updateReservationStatus = asyncHandler(async (req: AuthRequest, res: Response) => {
@@ -180,6 +188,8 @@ class AdminController {
       data: result.rows[0],
       message: 'Reservation updated successfully'
     });
+    
+    return;
   });
 
   toggleUserStatus = asyncHandler(async (req: AuthRequest, res: Response) => {
@@ -199,6 +209,8 @@ class AdminController {
       success: true,
       message: `User ${newStatus ? 'activated' : 'deactivated'} successfully`
     });
+    
+    return;
   });
 
   markCommissionPaid = asyncHandler(async (req: AuthRequest, res: Response) => {
@@ -228,6 +240,8 @@ class AdminController {
       success: true,
       message: `Marked commission of ₱${due} as paid`
     });
+    
+    return;
   });
 }
 
